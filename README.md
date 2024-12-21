@@ -1,4 +1,4 @@
-# When to sail
+# When to sail ⛵
 
 ## How to use 
 1. Install requirements.txt
