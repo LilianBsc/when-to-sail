@@ -8,8 +8,8 @@
 ## TODO
 - [ ] build a larger database with several ports
 - [ ] port as a variable
-- [.] add calendar to select your days
+- [ ] add calendar to select your days
 - [ ] threshold as a variable
-- [.] add HT and LT values and time in a visual interactive way
+- [ ] add HT and LT values and time in a visual interactive way
 - [ ] fix requirements
 - [ ] deploy
