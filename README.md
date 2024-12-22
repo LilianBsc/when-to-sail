@@ -1,5 +1,7 @@
 # When to sail ⛵
 
+[https://when-to-sail.streamlit.app](https://when-to-sail.streamlit.app)
+
 ## How to use 
 1. Install requirements.txt
 2. Run the notebooks one after another it will create your dataset
