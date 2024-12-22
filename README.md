@@ -6,10 +6,10 @@
 3. launch the app with `streamlit run app.py`
 
 ## TODO
-[ ] build a larger database with several ports
-[ ] port as a variable
-[ ] add calendar to select your days
-[ ] threshold as a variable
-[ ] add HT and LT values and time in a visual interactive way
-[ ] fix requirements
-[ ] deploy
+- [ ] build a larger database with several ports
+- [ ] port as a variable
+- [.] add calendar to select your days
+- [ ] threshold as a variable
+- [.] add HT and LT values and time in a visual interactive way
+- [ ] fix requirements
+- [ ] deploy
