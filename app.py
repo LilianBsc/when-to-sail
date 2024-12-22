@@ -8,7 +8,7 @@ locale.setlocale(locale.LC_TIME, 'fr_FR.UTF-8')
 # Configurer Streamlit en mode pleine largeur
 st.set_page_config(layout="wide")
 
-df = pd.read_csv("/home/hke/Desktop/projects/boat/when-to-sail/data/marees-2025.csv")
+df = pd.read_csv("data/marees-2025.csv")
 df["datetime"] = pd.to_datetime(df["datetime"])
 
 # Extraire les coefficients (PM1 et PM2) depuis la colonne "coefs"
