@@ -2,3 +2,4 @@ streamlit
 pandas
 plotly
 bs4
+ragflow-sdk

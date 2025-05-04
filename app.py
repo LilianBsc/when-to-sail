@@ -1,3 +1,6 @@
+"""
+The actual app.
+"""
 import locale
 locale.setlocale(locale.LC_TIME, 'fr_FR.UTF-8')
 
@@ -16,6 +19,8 @@ df = pd.read_csv("data/marees-2025.csv")
 df["datetime"] = pd.to_datetime(df["datetime"])
 
 df_coefs = created_coefs_df(df)
+
+st.components.v1.iframe("https://demo.ragflow.io/chat?dialogId=3b8f016ae66f11ef99b142010a8a0006&conversationId=&isNew=", height=500)
 
 # Titre de l'application
 st.title("Marées à Binic")
