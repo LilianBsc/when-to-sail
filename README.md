@@ -1,17 +1,16 @@
 # When to sail ⛵
 
-[https://when-to-sail.streamlit.app](https://when-to-sail.streamlit.app)
+[https://jimbo3.streamlit.app](https://jimbo3.streamlit.app)
 
 ## How to use 
+
 1. Install requirements.txt
 2. Run the notebooks one after another it will create your dataset
 3. launch the app with `streamlit run app.py`
 
-## TODO
-- [ ] build a larger database with several ports
-- [ ] port as a variable
-- [ ] add calendar to select your days
-- [ ] threshold as a variable
-- [ ] add HT and LT values and time in a visual interactive way
-- [ ] fix requirements
-- [ ] deploy
+## In coming
+
+- Automatique connection to Ragflow
+- Better ChatBot connected to internet and french forums
+- Autobus / Train / Tide caluclations
+- OpenCPN for the routes

@@ -1,6 +1,9 @@
 """
 Here you will find an AI agent dedicated to the Sangria boat.
 """
+# TODO: More complex chat bot
+# TODO: Authentification
+
 import streamlit as st
 
 st.set_page_config(
