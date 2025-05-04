@@ -1,6 +1,7 @@
 import locale
 locale.setlocale(locale.LC_TIME, 'fr_FR.UTF-8')
 
+import datetime
 import plotly.express as px
 import pandas as pd
 import streamlit as st
@@ -66,9 +67,25 @@ def color_weekends(fig, start_date, end_date, y0=0, y1=120, fillcolor="rgba(0, 2
         )
 
 def display_coefs_chart(df_coefs: pd.DataFrame):
+    # Affichage des boutons pour contrôler l'affichage des formes
+    today = datetime.datetime.now()
+    today_plus_1_month = today + datetime.timedelta(days=31)
+
+    d = st.date_input(
+        label="Dates de marées",
+        value=(today, today_plus_1_month),
+        min_value=datetime.datetime(2025,1,1),
+        max_value=datetime.datetime(2025,12,1),
+        format="DD.MM.YYYY",
+    )
+    d = tuple(datetime.datetime.combine(day, datetime.datetime.min.time()) for day in d)
+    df_coefs_to_display = df_coefs[(df_coefs["datetime"] >= d[0]) & (df_coefs["datetime"] <= d[1])]
+    display_seuil = st.checkbox("Afficher le seuil", value=False)
+    display_weekends = st.checkbox("Afficher les week-ends", value=False)
+
     # Graphique interactif avec Plotly
     fig = px.line(
-        df_coefs,
+        df_coefs_to_display,
         x="datetime",
         y="coefficient",
         markers=True,
@@ -78,12 +95,9 @@ def display_coefs_chart(df_coefs: pd.DataFrame):
     # Ajouter des infobulles pour afficher la date et le coefficient
     fig.update_traces(
         hovertemplate="<b>Date</b>: %{customdata[0]}<br><b>Heure PM</b>: %{customdata[1]}<br><b>Coefficient</b>: %{y}<extra></extra>",
-        customdata=df_coefs[["formatted_date", "formatted_time"]].values
+        customdata=df_coefs_to_display[["formatted_date", "formatted_time"]].values
     )
-
-    # Affichage des boutons pour contrôler l'affichage des formes
-    display_seuil = st.checkbox("Afficher le seuil", value=False)
-    display_weekends = st.checkbox("Afficher les week-ends", value=False)
+    # st.dataframe(df_coefs_to_display)
 
     if display_seuil:
         # Ajouter une ligne horizontale à coefs = 45
@@ -96,9 +110,9 @@ def display_coefs_chart(df_coefs: pd.DataFrame):
         # Ajouter une zone colorée sous la ligne
         fig.add_shape(
             type="rect",
-            x0=df_coefs["datetime"].min(),  # Début de la zone (première date)
-            x1=df_coefs["datetime"].max(),  # Fin de la zone (dernière date)
-            y0=0,  # Début de la zone (coefficient min)
+            x0=df_coefs_to_display["datetime"].min(),  # Début de la zone (première date)
+            x1=df_coefs_to_display["datetime"].max(),  # Fin de la zone (dernière date)
+            y0=min(df_coefs_to_display["coefficient"]),  # Début de la zone (coefficient min)
             y1=45,  # Fin de la zone (seuil de 45)
             fillcolor="rgba(255, 0, 0, 0.3)",  # Couleur rouge avec transparence (0.3)
             line=dict(color="red", width=0),  # Pas de bordure
@@ -108,14 +122,14 @@ def display_coefs_chart(df_coefs: pd.DataFrame):
 
         # Ajouter une annotation explicite pour la légende de la zone
         fig.add_annotation(
-            x=df_coefs["datetime"].median(),  # Position horizontale sur la dernière date
+            x=df_coefs_to_display["datetime"].median(),  # Position horizontale sur la dernière date
             y=45,  # Position verticale au niveau du seuil
             text="Seuil de fermeture des portes = 45",  # Texte à afficher
             showarrow=True,  # Afficher une flèche pointant vers le seuil
             arrowhead=2,  # Style de la flèche
-            arrowsize=1,  # Taille de la flèche
+            arrowsize=0.5,  # Taille de la flèche
             ax=0,  # Décalage horizontal de la flèche
-            ay=80,  # Décalage vertical de la flèche
+            ay=20,  # Décalage vertical de la flèche
             font=dict(size=12),  # Police du texte
             align="center"  # Alignement du texte
         )
@@ -124,10 +138,10 @@ def display_coefs_chart(df_coefs: pd.DataFrame):
         # Ajouter des barres verticales vertes aux week-ends
         color_weekends(
             fig,
-            start_date=df_coefs["datetime"].min(),
-            end_date=df_coefs["datetime"].max(),
-            y0=0,
-            y1=120,
+            start_date=df_coefs_to_display["datetime"].min(),
+            end_date=df_coefs_to_display["datetime"].max(),
+            y0=min(df_coefs_to_display["coefficient"]),
+            y1=max(df_coefs_to_display["coefficient"]),
             fillcolor="rgba(0, 255, 60, 0.576)",
             opacity=0.3
             )
